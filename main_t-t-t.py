@@ -35,7 +35,7 @@ def hello():
 # view()
 
 # Вариант 2
-field_1 = [[' '] * 3 for i in range(3)] # inline
+#field_1 = [[' '] * 3 for i in range(3)] # inline
 #print(field_1)
 def view_1():
     print('  | 0 | 1 | 2 | ')
@@ -76,9 +76,24 @@ def enter():
 
 #enter()
 
+#БЛОК 5. ОПРЕДЕЛЕНИЕ ВЫИГРЫШНЫХ КОМБИНАЦИЙ
+def win_combinat():
+    win_combinat = (((0, 0), (0, 1), (0, 2)), ((1, 0), (1, 1), (1, 2)), ((2, 0), (2, 1), (2, 2)), ((0, 2), (1, 1), (2, 0)), ((0, 0), (1, 1), (2, 2)), ((0, 0), (1, 0), (2, 0)), ((0, 1), (1, 1), (2, 1)), ((0, 2), (1, 2), (2, 2)))
+    for moving in win_combinat:
+        syns = []
+        for numb in moving:
+            syns.append(field_1[numb[0]][numb[1]])
+        if syns == ['X', 'X', 'X']:
+            print('Выиграл Крестик!')
+            return True
+        if syns == ['0', '0', '0']:
+            print('Выиграл Нолик!')
+            return True
+    return False
+
 # БЛОК 4. ОТОБРАЖЕНИЕ ИГРЫ
 hello()
-
+field_1 = [[' '] * 3 for i in range(3)] # inline
 count = 0
 while True:
     count += 1 #начало игры
@@ -95,9 +110,10 @@ while True:
         field_1[string][row] = 'X'
     else:
         field_1[string][row] = '0'
-    # остановка игры и безусловный выход из цикла
-    if count == 9:
-        print('Игра завершена, все поля заполнены')
+
+    if win_combinat(): # проверка выигрышных комбинаций
         break
 
-
+    if count == 9: # остановка игры и безусловный выход из цикла
+        print('Игра завершена, все поля заполнены')
+        break
